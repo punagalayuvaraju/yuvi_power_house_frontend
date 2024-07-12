@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
   providedIn: 'root',
 })
 export class UserService {
-  private apiEndPoint: string = environment.apiEndPoint + 'taskProj/v1/';
+  private apiEndPoint: string = environment.apiEndPoint + 'taskProj/v1/api/';
 
   constructor(private http: HttpClient) {}
 
@@ -17,5 +17,14 @@ export class UserService {
 
   createUser(user: any) {
     return lastValueFrom(this.http.post<any>(this.apiEndPoint + `users`, user));
+  }
+
+  public isAuthenticated(): boolean {
+    console.log(localStorage.getItem('token'));
+    if (localStorage.getItem('token')) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

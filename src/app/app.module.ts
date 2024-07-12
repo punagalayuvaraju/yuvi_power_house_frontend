@@ -11,12 +11,19 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../../material/material.module';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskListComponent,
     UserListComponent,
+    SignUpComponent,
+    SignInComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,8 +36,9 @@ import { MaterialModule } from '../../material/material.module';
     BrowserAnimationsModule,
     MaterialModule,
     NgxSpinnerModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

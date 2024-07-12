@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
   providedIn: 'root',
 })
 export class TaskService {
-  private apiEndPoint: string = environment.apiEndPoint + 'taskProj/v1/';
+  private apiEndPoint: string = environment.apiEndPoint + 'taskProj/v1/api/';
 
   constructor(private http: HttpClient) {}
 

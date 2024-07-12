@@ -1,1 +1,58 @@
-<p>task-list works!</p>
+<div>
+    <form [formGroup]="TaskCreateForm">
+        <div class="container">
+            <mat-card>
+                <div class="mat-elevation-z8">
+                    <div class="table-header">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Filter</mat-label>
+                            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. task title">
+                        </mat-form-field>
+                        <button mat-raised-button color="primary" routerLink="/task/new">Add Task</button>
+                    </div>
+
+                    <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                        <!-- Title Column -->
+                        <ng-container matColumnDef="title">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element?.title}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Created Date Column -->
+                        <ng-container matColumnDef="createdDate">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element?.createdDate | date}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Due Date Column -->
+                        <ng-container matColumnDef="dueDate">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element?.dueDate | date}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Status Column -->
+                        <ng-container matColumnDef="status">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element?.status}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Actions Column -->
+                        <ng-container matColumnDef="actions">
+                            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                <button mat-icon-button color="warn" (click)="deleteTask(element?._id)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>
+            </mat-card>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,36 @@
+<div class="dspFlx width-100 height-100">
+    <div class="height-100 width-50 dspFlx jus-con-cen  ali-itm-cen">
+        <img class="cus_wid_hgt_banner" src="assets\powerschool.png">
+    </div>
+
+    <div class="height-100 width-50 dspFlx jus-con-cen  ali-itm-cen">
+        <mat-card class="signup-card">
+            <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+
+                <mat-form-field appearance="outline" class="pad_internally">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="email" formControlName="emailId">
+                    <mat-error *ngIf="submitted && f['emailId'].errors">
+                        <div *ngIf="f['emailId'].errors['required']">Email is required</div>
+                        <div *ngIf="f['emailId'].errors['email']">Email must be a valid email address</div>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="pad_internally">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password">
+                    <mat-error *ngIf="submitted && f['password'].errors">
+                        <div *ngIf="f['password'].errors['required']">Password is required</div>
+                        <div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</div>
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="form-buttons pad_internally">
+                    <button mat-raised-button color="primary" type="submit">Sign In</button>
+                    <button mat-raised-button color="accent" type="button" (click)="onReset()">Sign Up</button>
+                </div>
+            </form>
+        </mat-card>
+
+    </div>
+</div>
