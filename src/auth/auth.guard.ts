@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean> {
-    return await this.checkLogin(state.url);
+    return await this.checkLogin();
   }
 
   async canActivateChild(
@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     return await this.canActivate(childRoute, state);
   }
 
-  async checkLogin(returnUrl: string): Promise<boolean> {
+  async checkLogin(): Promise<boolean> {
     console.log(this.authService.isAuthenticated());
     if (this.authService.isAuthenticated()) {
       return true;

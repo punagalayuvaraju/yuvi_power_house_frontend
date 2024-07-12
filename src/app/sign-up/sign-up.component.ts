@@ -46,17 +46,17 @@ export class SignUpComponent {
       const response: any = await this.userService.createUser(
         this.signupForm.value
       );
-      if (response?.data) {
-        const { token, ...userData } = response?.data;
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(userData));
+      if (response) {
+        const { token, ...userData } = response;
+        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('user', JSON.stringify(userData));
         this.toasterService.successToaster('Successfully Registered...');
         this.router.navigate(['/dashboard']);
       }
       this.spinnerService.hideSpinner();
     } catch (error: any) {
       if (error.status == errorCodes.HTTP_BAD_REQUEST) {
-        this.toasterService.errorToaster(error?.error?.message);
+        this.toasterService.errorToaster(error?.error?.error);
       } else {
         this.toasterService.errorToaster(
           'Something went wrong please try again'

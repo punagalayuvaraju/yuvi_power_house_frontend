@@ -1,58 +1,99 @@
 <div>
-    <form [formGroup]="TaskCreateForm">
-        <div class="container">
-            <mat-card>
-                <div class="mat-elevation-z8">
-                    <div class="table-header">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Filter</mat-label>
-                            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. task title">
-                        </mat-form-field>
-                        <button mat-raised-button color="primary" routerLink="/task/new">Add Task</button>
-                    </div>
-
-                    <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-                        <!-- Title Column -->
-                        <ng-container matColumnDef="title">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element?.title}} </mat-cell>
-                        </ng-container>
-
-                        <!-- Created Date Column -->
-                        <ng-container matColumnDef="createdDate">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element?.createdDate | date}} </mat-cell>
-                        </ng-container>
-
-                        <!-- Due Date Column -->
-                        <ng-container matColumnDef="dueDate">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element?.dueDate | date}} </mat-cell>
-                        </ng-container>
-
-                        <!-- Status Column -->
-                        <ng-container matColumnDef="status">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element?.status}} </mat-cell>
-                        </ng-container>
-
-                        <!-- Actions Column -->
-                        <ng-container matColumnDef="actions">
-                            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
-                            <mat-cell *matCellDef="let element">
-                                <button mat-icon-button color="warn" (click)="deleteTask(element?._id)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </mat-cell>
-                        </ng-container>
-
-                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                    </mat-table>
-                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <div class="container">
+        <mat-card>
+            <div class="mat-elevation-z8">
+                <div class="table-header">
+                    <mat-form-field appearance="outline" class="marg_left_2_perc">
+                        <mat-label>Filter</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. task title">
+                    </mat-form-field>
+                    <span class="marg_rigt_2_perc">
+                        <button class="marg_rigt_2_perc" (click)="createTask()" mat-raised-button color="primary"
+                            type="button">Add Task</button>
+                    </span>
                 </div>
-            </mat-card>
-        </div>
 
-    </form>
+                <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                    <!-- Title Column -->
+                    <ng-container matColumnDef="title">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element?.title}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Created Date Column -->
+                    <ng-container matColumnDef="createdDate">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element?.createdDate | date}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Due Date Column -->
+                    <ng-container matColumnDef="dueDate">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element?.dueDate | date}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element?.status}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Actions Column -->
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <button mat-icon-button color="warn" (click)="deleteTask(element?._id)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+        </mat-card>
+    </div>
+
 </div>
+
+<ng-template #createTaskDialog>
+    <mat-card class="task-form-card">
+        <form [formGroup]="TaskCreateForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline">
+                <mat-label>Title</mat-label>
+                <input matInput formControlName="title">
+                <mat-error *ngIf="submitted && f['title'].errors">
+                    <div *ngIf="f['title'].errors['required']">Title is required</div>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Due Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dueDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="submitted && f['title'].errors">
+                    <div *ngIf="f['title'].errors['required']">Title is required</div>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option *ngFor="let status of statuses" [value]="status">{{status}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="submitted && f['status'].errors">
+                    <div *ngIf="f['status'].errors['required']">Status is required</div>
+                </mat-error>
+            </mat-form-field>
+
+            <div class="form-buttons">
+                <button mat-raised-button color="primary" type="submit">Save Task</button>
+                <button mat-dialog-close mat-raised-button color="accent" type="button">Close</button>
+            </div>
+        </form>
+    </mat-card>
+
+</ng-template>

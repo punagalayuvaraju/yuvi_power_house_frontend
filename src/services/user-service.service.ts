@@ -19,9 +19,20 @@ export class UserService {
     return lastValueFrom(this.http.post<any>(this.apiEndPoint + `users`, user));
   }
 
+  loginUser(user: any) {
+    return lastValueFrom(
+      this.http.post<any>(this.apiEndPoint + `users/login`, user)
+    );
+  }
+
+  deleteUser(id: string) {
+    return lastValueFrom(
+      this.http.delete<any>(this.apiEndPoint + `tasks/${id}`)
+    );
+  }
+
   public isAuthenticated(): boolean {
-    console.log(localStorage.getItem('token'));
-    if (localStorage.getItem('token')) {
+    if (sessionStorage.getItem('token')) {
       return true;
     } else {
       return false;

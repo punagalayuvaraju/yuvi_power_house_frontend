@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { TaskService } from '../../services/task-service.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-task-list',
@@ -23,10 +24,15 @@ export class TaskListComponent implements OnInit {
   dataSource = new MatTableDataSource(this.tasks);
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('createTaskDialog') createTaskDialog!: TemplateRef<any>;
+  dialogRef: any;
+  statuses: string[] = ['Scheduled', 'Completed', 'Cancelled'];
+  submitted = false;
 
   constructor(
     private taskService: TaskService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +41,26 @@ export class TaskListComponent implements OnInit {
   }
 
   initializeTask() {
-    this.TaskCreateForm = this.formBuilder.group({});
+    this.TaskCreateForm = this.formBuilder.group({
+      title: ['', [Validators.required]],
+      dueDate: ['', [Validators.required]],
+      status: ['Scheduled', [Validators.required]],
+    });
+  }
+
+  get f() {
+    return this.TaskCreateForm.controls;
+  }
+
+  createTask() {
+    this.dialogRef = this.dialog.open(this.createTaskDialog, {
+      maxWidth: '50vw',
+      disableClose: true,
+      backdropClass: 'transparent',
+    });
+    this.dialogRef.afterClosed().subscribe((result: any) => {
+      console.log(result);
+    });
   }
 
   loadTasks() {
@@ -61,5 +86,13 @@ export class TaskListComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  dialogClose() {
+    if (this.dialogRef) this.dialogRef.close();
+  }
+
+  onSubmit() {
+    this.submitted = true;
   }
 }
