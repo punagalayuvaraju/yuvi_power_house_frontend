@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { TaskListComponent } from './task-list/task-list.component';
-import { UserListComponent } from './user-list/user-list.component';
 import { CommonModule } from '@angular/common';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,7 +19,6 @@ import { ToastrModule } from 'ngx-toastr';
   declarations: [
     AppComponent,
     TaskListComponent,
-    UserListComponent,
     SignUpComponent,
     SignInComponent,
     DashboardComponent,

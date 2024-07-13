@@ -29,7 +29,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   async checkLogin(): Promise<boolean> {
-    console.log(this.authService.isAuthenticated());
     if (this.authService.isAuthenticated()) {
       return true;
     }

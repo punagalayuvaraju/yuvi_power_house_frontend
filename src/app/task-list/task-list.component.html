@@ -8,7 +8,7 @@
                         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. task title">
                     </mat-form-field>
                     <span class="marg_rigt_2_perc">
-                        <button class="marg_rigt_2_perc" (click)="createTask()" mat-raised-button color="primary"
+                        <button class="width-100-px" (click)="createTask('create','')" mat-raised-button color="primary"
                             type="button">Add Task</button>
                     </span>
                 </div>
@@ -42,8 +42,12 @@
                     <ng-container matColumnDef="actions">
                         <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
                         <mat-cell *matCellDef="let element">
-                            <button mat-icon-button color="warn" (click)="deleteTask(element?._id)">
-                                <mat-icon>delete</mat-icon>
+                            <button mat-icon-button color="warn" (click)="deleteTask(element)">
+                                <mat-icon>delete</mat-icon>remove
+                            </button>
+
+                            <button mat-icon-button color="warn" (click)="createTask('update', element)">
+                                <mat-icon>create</mat-icon>update
                             </button>
                         </mat-cell>
                     </ng-container>
@@ -61,7 +65,7 @@
 <ng-template #createTaskDialog>
     <mat-card class="task-form-card">
         <form [formGroup]="TaskCreateForm" (ngSubmit)="onSubmit()">
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="pad5Perc">
                 <mat-label>Title</mat-label>
                 <input matInput formControlName="title">
                 <mat-error *ngIf="submitted && f['title'].errors">
@@ -69,7 +73,7 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="pad5Perc">
                 <mat-label>Due Date</mat-label>
                 <input matInput [matDatepicker]="picker" formControlName="dueDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -79,7 +83,7 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="pad5Perc">
                 <mat-label>Status</mat-label>
                 <mat-select formControlName="status">
                     <mat-option *ngFor="let status of statuses" [value]="status">{{status}}</mat-option>
@@ -89,8 +93,12 @@
                 </mat-error>
             </mat-form-field>
 
-            <div class="form-buttons">
-                <button mat-raised-button color="primary" type="submit">Save Task</button>
+            <div class="form-buttons dspFlx jus-con-space-even">
+                <button *ngIf="dialogType === 'create'" mat-raised-button color="primary" type="submit">Create
+                    Task</button>
+                <button *ngIf="dialogType === 'update'" mat-raised-button color="primary" type="button"
+                    (click)="UpdateTask()">Update
+                    Task</button>
                 <button mat-dialog-close mat-raised-button color="accent" type="button">Close</button>
             </div>
         </form>

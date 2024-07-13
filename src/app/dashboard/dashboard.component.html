@@ -5,7 +5,10 @@
     <hr>
 
     <div class="dspFlx ali-itm-cen jus-con-end">
-        <mat-icon>Logout</mat-icon>
+        <span class="marg_rigt_2_perc">
+            <mat-icon (click)="logout()">exit_to_app</mat-icon> &nbsp;&nbsp;
+            <strong>{{user?.user?.name}}</strong>
+        </span>
     </div>
 
     <div>
@@ -13,11 +16,6 @@
             <mat-step>
                 <ng-template matStepLabel>Task Management</ng-template>
                 <app-task-list></app-task-list>
-            </mat-step>
-
-            <mat-step>
-                <ng-template matStepLabel>User Management</ng-template>
-                <app-user-list></app-user-list>
             </mat-step>
         </mat-stepper>
     </div>

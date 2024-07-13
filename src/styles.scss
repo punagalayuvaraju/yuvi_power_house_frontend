@@ -26,6 +26,10 @@ body {
     align-items: center;
 }
 
+.jus-con-space-even {
+    justify-content: space-evenly;
+}
+
 .width-100 {
     width: 100%;
 }
@@ -47,5 +51,13 @@ body {
 }
 
 .marg_rigt_2_perc {
-    margin-rigt: 2%;
+    margin-right: 2%;
+}
+
+.pad5Perc {
+    padding: 5%;
+}
+
+.width-100-px {
+    width: 100px;
 }
