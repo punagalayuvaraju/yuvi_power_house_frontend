@@ -18,10 +18,10 @@ COPY --chown=node:node . .
 RUN npm run build --configuration=production
 
 # Copy the contents of the "dist" folder (your build output) to the container's "/app" directory
-RUN cp -R dist/church /home/node/app
+RUN cp -R dist/task-management /home/node/app
 
 # Expose the port on which the Angular app will run (default is 80)
 EXPOSE 4000
 
 # Start a simple HTTP server to serve the static files from the build folder
-CMD ["http-server", "dist/church", "-p", "4000"]
+CMD ["http-server", "dist/task-management", "-p", "4000"]
